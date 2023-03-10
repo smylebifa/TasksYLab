@@ -5,20 +5,23 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // task1();
         // task2();
-        task3();
-        // task4();
+        // task3();
+        task4();
     }
 
+    // Array of characters
     public static void task1()
     {
+        System.out.println("Введите размер строк, столбцов и символ");
+        
         try (Scanner scanner = new Scanner(System.in)) {
-            int n = scanner.nextInt();
-            int m = scanner.nextInt();
+            int stringSize = scanner.nextInt();
+            int columnSize = scanner.nextInt();
+            
             String template = scanner.next();
-            int i;
-            int j;
-            for (i = 0; i < n; i++) {
-                for (j = 0; j < m; j++) {
+
+            for (int i = 0; i < stringSize; i++) {
+                for (int j = 0; j < columnSize; j++) {
                     System.out.print(template);
                 }
                 System.out.println();
@@ -26,82 +29,88 @@ public class Main {
         }
     }
 
+    // Pell numbers
     public static void task2()
     {
+        int userNumber;
+        
         try (Scanner scanner = new Scanner(System.in)) {
+          System.out.print("Введите число от 0 до 30 : ");
+          userNumber = scanner.nextInt();
+      }
 
-            System.out.print ("Введите число от 0 до 30 : ");
-            int n = scanner.nextInt();
+            // Initial state for userNumber = 0
+      int result = 0;
 
-            int m2 = 0;
-
-            if (n > 30 || n < 0) {
-                System.out.println ("Вы ввели не верное число");
-            }
-            else
-            {
-                if (n == 1) {
-                    m2 = 1;
-                }
-
-                else
-                {
-                    int m0 = 0;
-                    int m1 = 1;
-
-                    for(int i = 1; i < n; i++){
-                        m2 = 2 * m1 + m0;
-                        m0 = m1;
-                        m1 = m2;
-                    }
-                }
-            }
-
-            System.out.println(m2);
+      if (userNumber > 30 || userNumber < 0) {
+        System.out.println("Вы ввели не верное число");
+    }
+    else
+    {
+        if (userNumber == 1) {
+            result = 1;
         }
 
-    }
+        else
+        {
+            int x0 = 0;
+            int x1 = 1;
 
-    public static void task3()
-    {
-        for (int i = 1; i <= 9; i++) {
-            for (int j = 1; j <= 9; j++) {
-                System.out.println(i + " x " + j + " = " + (i * j));
+            for(int i = 1; i < userNumber; i++){
+                result = 2 * x1 + x0;
+                x0 = x1;
+                x1 = result;
             }
-            System.out.println();
         }
     }
 
-    public static void task4()
-    {
+    System.out.println(result);
+
+}
+
+    // Multiplication table
+public static void task3()
+{
+    for (int i = 1; i <= 9; i++) {
+        for (int j = 1; j <= 9; j++) {
+            System.out.println(i + " x " + j + " = " + (i * j));
+        }
+        System.out.println();
+    }
+}
+
+    // Guess
+public static void task4()
+{
         int number = new Random().nextInt(100); // здесь загадывается число от 1 до 99
         int maxAttempts = 10; // здесь задается количество попыток
         System.out.println("Я загадал число. У тебя " + maxAttempts + " попыток угадать.");
 
         String resultOfGame = "Вы не угадали!";
 
-        double user;
+        double userNumber;
         int count = 0;
 
+        Scanner scanner = new Scanner(System.in);
         do {
 
             System.out.println("Введите ваше число: ");
 
-            Scanner input = new Scanner(System.in);
+            
+            userNumber = scanner.nextDouble();
+            
 
-            user = input.nextDouble();
-
-            if (user == number) {
+            if (userNumber == number) {
                 resultOfGame = "Вы угадали!";
                 break;
             }
 
             else {
 
-                if (user < number || user > number) {
+                if (userNumber < number || userNumber > number) {
 
 
-                    if (number < user) {
+                    if (number < userNumber) {
                         System.out.println("Моё число меньше.");
                     } else {
                         System.out.println("Моё число больше.");
@@ -110,10 +119,12 @@ public class Main {
 
                 count++;
 
-                System.out.println("Количество попыток " + (10 - count));
+                System.out.println("Количество попыток " + (maxAttempts - count));
             }
 
-        } while(count < 10);
+        } while(count < maxAttempts);
+
+        scanner.close();
 
         System.out.println(resultOfGame);
     }
