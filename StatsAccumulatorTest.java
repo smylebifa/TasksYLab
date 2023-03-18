@@ -29,52 +29,44 @@ public class StatsAccumulatorTest {
 
     public static class StatsAccumulatorImpl implements StatsAccumulator {
 
-        ArrayList<Integer> arrayList;
+        private int count = 0;
+        private int sum = 0;
 
-        public StatsAccumulatorImpl() {
-            arrayList = new ArrayList();
-        }
+        private int min = Integer.MAX_VALUE;
+        private int max = Integer.MIN_VALUE;
 
-
+        @Override
         public void add(int value) {
-            arrayList.add(value);
-        }
+          count++;
 
+          sum = sum + value;
+
+          if (value > max) 
+            max = value;
+
+          if (value < min) 
+            min = value;
+        };
+
+        @Override
         public int getMin() {
-            int min = Integer.MAX_VALUE;
-            for (int value : arrayList) {
-                if (value < min) {
-                    min = value;
-                }
-            }
-            return min;
-        }
+          return min;
+        };
 
+        @Override
         public int getMax() {
-            int max = Integer.MIN_VALUE;
-            for (int value : arrayList) {
-                if (value > max) {
-                    max = value;
-                }
-            }
-            return max;
-        }
+          return max;
+        };
 
+        @Override
         public int getCount() {
-            return arrayList.size();
-        }
+          return count;
+        };
 
+        @Override
         public Double getAvg() {
-            double sum = 0.0;
-            for (int value : arrayList) {
-                sum += value;
-            }
-
-            if (sum != 0.0)
-                return sum / arrayList.size();
-            else
-                return 0.0;
-        }
+          return (double) sum / count;
+        };
     }
 
     public interface StatsAccumulator {
